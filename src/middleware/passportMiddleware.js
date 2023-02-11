@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require("../models/userModel");
-const { generateToken } = require("../middleware/authMiddleware")
+const { generateToken } = require("./authMiddleware")
 
 passport.use(new GoogleStrategy({ 
     callbackURL: process.env.CALLBACK_URL,

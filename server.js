@@ -3,6 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require('cookie-parser')
 const connectDB = require("./src/database/db");
+const passport = require('./src/middleware/passportMiddleware')
 
 // Initialize Express
 const app = express();
@@ -31,11 +32,15 @@ app.use((req, res, next) => {
     next();
   });
 
+  app.use(passport.initialize());
+
+  app.get('/', (req, res) => {
+    res.send('welcome to projectX use /api/user to make your auth calls')
+  })
+
 //routes
 app.use('/api/user', userRoutes);
-app.get('/', (req, res) => {
-  res.send('welcome to projectX use /api/user to make your auth calls')
-})
+
 
 
 //PORT

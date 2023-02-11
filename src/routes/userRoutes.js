@@ -19,7 +19,9 @@ router.post('/register', [
     check("password", "Password required and must be a minimum of 8 characters").exists().isLength({ min : 8 })
 ], registerUser);
 
+router.get('/auth/google', passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/'}), googleSignIn)
+
 router.get('/register/:code', verifyAccount);
 router.get('/me', authenticate , getUser)
 router.patch('/me', authenticate, updateUser);
