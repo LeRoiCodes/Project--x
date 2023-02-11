@@ -28,12 +28,15 @@ const UserSchema = mongoose.Schema(
         },
         country:{
             type: String,
-            required:true
         },
         isEmployer: {
             type: Boolean,
             default: false,
             required: true
+        },
+        isGoogle: {
+            type: Boolean,
+            default: false
         },
         resetPasswordToken: String,
 		resetPasswordExpire: Date,

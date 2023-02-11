@@ -39,6 +39,7 @@ const registerUser = asyncHandler( async (req, res) => {
 			country,
 			password,
 			isEmployer,
+			isGoogle: false,
 			verificationCode: verifyToken,
 		});
 
@@ -81,11 +82,12 @@ const verifyAccount = asyncHandler(async (req, res) => {
 		} else {
 			verifyUser.isVerified = true;
 			await verifyUser.save();
-			res.status(200).json({
-                success: true,
-                user: verifyUser,
-				access_token: generateToken(verifyUser.id),
-			});
+			res.cookie({
+				'token': generateToken(verifyUser.id),
+			}).json({
+				success: true
+			})
+			//res.redirect('frontend')
 		}
 	} catch (error) {
 		res.status(500);
@@ -133,12 +135,24 @@ const loginUser = asyncHandler(async (req, res) => {
 		);
 	}
 	
-	res.status(200).json({
-		success: true,
-		access_token: generateToken(user.id),
-		user
-	});
+	// res.status(200).json({
+	// 	success: true,
+	// 	access_token: generateToken(user.id),
+	// 	user
+	// });
+	res.cookie({
+		'token': generateToken(user.id)
+	}).json({
+		success: true
+	})
 });
+
+const googleSignIn = asyncHandler(async (req, res) => {
+	res.cookie({
+		'token': req.user.token
+	});
+	res.redirect('/');
+})
 
 /**
  * @desc Get user profile
@@ -295,4 +309,5 @@ module.exports = {
     updateUser,
     forgotPassword,
     resetPassword,
+	googleSignIn
 }
