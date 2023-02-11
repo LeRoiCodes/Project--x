@@ -33,6 +33,9 @@ app.use((req, res, next) => {
 
 //routes
 app.use('/api/user', userRoutes);
+app.use('/', (req, res) => {
+  res.send('welcome to projectX use /api/user to make your auth calls')
+})
 
 
 //PORT
