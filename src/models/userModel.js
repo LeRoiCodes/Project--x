@@ -28,11 +28,11 @@ const UserSchema = mongoose.Schema(
         },
         country:{
             type: String,
+            default: 'Nigeria'
         },
         isEmployer: {
             type: Boolean,
             default: false,
-            required: true
         },
         isGoogle: {
             type: Boolean,

@@ -3,6 +3,7 @@ require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require('cookie-parser')
 const connectDB = require("./src/database/db");
+const session = require('express-session')
 const passport = require('./src/middleware/passportMiddleware')
 
 // Initialize Express
@@ -18,6 +19,13 @@ app.use(express.json());
 app.use(cors())
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser())
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

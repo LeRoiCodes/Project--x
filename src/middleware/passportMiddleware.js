@@ -16,10 +16,9 @@ async (accessToken, refreshToken, profile, done) => {
     if (!currentUser){
        const newUser = await User.create({
         email: profile.emails[0].value,
-        firstName: profile.firstName,
-        lastName: profile.lastName,
+        firstName: profile.name.givenName || 'john',
+        lastName: profile.name.familyName || 'doe',
         password: profile.id,
-        isEmployer,
         isGoogle: true,
         isVerified: true,
     }); 
@@ -44,14 +43,14 @@ async (accessToken, refreshToken, profile, done) => {
 })
 );
 passport.serializeUser((user, done) => {
-    done(null, user._id);
+    done(null, user);
   });
   
-  passport.deserializeUser(async (_id, done) => {
-    const currentUser = await User.findOne({
-      _id,
-    });
-    done(null, currentUser);
+  passport.deserializeUser(async (user, done) => {
+    // const currentUser = await User.findOne({
+    //   _id,
+    // });
+    done(null, user);
   });
 
 module.exports = passport;

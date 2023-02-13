@@ -20,7 +20,7 @@ router.post('/register', [
 ], registerUser);
 
 router.get('/auth/google', passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/'}), googleSignIn)
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'https://project-xp.vercel.app/login', failureFlash: true}), googleSignIn)
 
 router.get('/register/:code', verifyAccount);
 router.get('/me', authenticate , getUser)

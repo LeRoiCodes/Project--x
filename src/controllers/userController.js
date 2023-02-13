@@ -82,12 +82,11 @@ const verifyAccount = asyncHandler(async (req, res) => {
 		} else {
 			verifyUser.isVerified = true;
 			await verifyUser.save();
-			res.cookie({
-				'token': generateToken(verifyUser.id),
-			}).json({
-				success: true
+			res.status(200).json({
+				success: true,
+				token: generateToken(verifyUser.id),
 			})
-			//res.redirect('frontend')
+			res.redirect('https://project-xp.vercel.app/')
 		}
 	} catch (error) {
 		res.status(500);
@@ -134,26 +133,31 @@ const loginUser = asyncHandler(async (req, res) => {
 			'Your Account is not Verified. Please Verifiy Your Account'
 		);
 	}
+	if(user.isGoogle === true){
+		res.status(500);
+		throw new Error(
+			'sign in using google'
+		)
+	}
 	
 	// res.status(200).json({
 	// 	success: true,
 	// 	access_token: generateToken(user.id),
 	// 	user
 	// });
-	res.cookie({
-		'token': generateToken(user.id)
-	}).json({
-		success: true
+	res.status(200).json({
+		success: true,
+		token : generateToken(user.id)
 	})
 });
 
 
 
 const googleSignIn = asyncHandler(async (req, res) => {
-	res.cookie({
-		'token': req.user.token
-	});
-	res.redirect('/');
+	res.status(200).json({
+		success: true,
+		token : req.user.token
+	})
 })
 
 /**
