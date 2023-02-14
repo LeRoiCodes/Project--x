@@ -5,6 +5,42 @@ const cookieParser = require('cookie-parser')
 const connectDB = require("./src/database/db");
 const session = require('express-session')
 const passport = require('./src/middleware/passportMiddleware')
+const swaggerUI = require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc')
+
+//swagger docs settings
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "ProjectX",
+      version: "1.0.0",
+      description: "An api for projectX"
+    },
+    servers: [
+      {
+        url: 'https://projectx-f5wv.onrender.com',
+        description: "Staging Server"
+
+
+      },
+      {
+        //update to production url
+       url: 'http://localhost:8000',
+        description: "Development Server"
+
+      }
+     
+    ]
+  },
+  apis: ["./src/routes/*.js"]
+};
+
+const specs = swaggerJsDoc(options)
+ 
+
+
+
 
 // Initialize Express
 const app = express();
@@ -43,11 +79,16 @@ app.use((req, res, next) => {
   app.use(passport.initialize());
 
   app.get('/', (req, res) => {
-    res.send('welcome to projectX use /api/user to make your auth calls')
+    res.status(200).json({
+      message: 'welcome to projectX api',
+      docroute: 'go to /api/docs for api documentation'
+    })
   })
 
 //routes
 app.use('/api/user', userRoutes);
+//swagger docs route
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 
 

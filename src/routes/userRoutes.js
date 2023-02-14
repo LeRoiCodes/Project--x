@@ -26,7 +26,7 @@ router.get('/register/:code', verifyAccount);
 router.get('/me', authenticate , getUser)
 router.patch('/me', authenticate, updateUser);
 router.post('/forgotpassword', forgotPassword);
-router.put('/resetpassword', resetPassword);
+router.put('/resetpassword/:resettoken', resetPassword)
 
 
 module.exports = router;

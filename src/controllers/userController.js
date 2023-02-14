@@ -47,7 +47,7 @@ const registerUser = asyncHandler( async (req, res) => {
 			const text = `<h1>Email Confirmation</h1>
         <h2>Hello ${firstName}</h2>
         <p>Verify your email address to complete the signup and login to your account to Project-x</p>
-        <a href='http://localhost:8000/api/user/register/${user.verificationCode}'> Click here</a>
+        <a href='https://projectx-f5wv.onrender.com/api/user/register/${user.verificationCode}'> Click here</a>
 
         </div>`;
 
@@ -59,7 +59,7 @@ const registerUser = asyncHandler( async (req, res) => {
 
 			res.status(201).json({
                 success: true,
-				user
+				//user
 			});
 		}
 	} catch (error) {
@@ -177,7 +177,7 @@ const getUser = asyncHandler(async (req, res) => {
         }
         res.status(200).json({
             success: true,
-            // user: user,
+            user
         }); 
         
     } catch(err){
@@ -244,7 +244,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         <h2>Hello ${user.firstName}</h2>
         <p>You are receiving this email because you (or someone else) has
          requested the reset of a password</p>
-           <a href='http://localhost:8000/reset'> Click here to reset your password</a>
+           <a href='https://projectx-f5wv.onrender.com/api/user/resetpassword/${resetToken}'> Click here to reset your password</a>
 
         </div>`;
 			//change to app reset page
@@ -278,10 +278,10 @@ const forgotPassword = asyncHandler(async (req, res) => {
  * @access Public
  */
 const resetPassword = asyncHandler(async (req, res) => {
-	//  Get hased token
+	//  Get hashed token
 	const resetPasswordToken = crypto
 		.createHash('sha256')
-		.update(req.body.resetToken)
+		.update(req.params.resettoken)
 		.digest('hex');
 
 	const user = await User.findOne({
