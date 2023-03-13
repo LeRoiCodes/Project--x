@@ -64,7 +64,7 @@ const registerUser = asyncHandler( async (req, res) => {
 			});
 		}
 	} catch (error) {
-		res.status(404);
+		res.status(500);
 		throw new Error(error.message);
 	}
 });
@@ -116,20 +116,20 @@ const loginUser = asyncHandler(async (req, res) => {
 	const user = await User.findOne({ email }).select('+password');
 
 	if (!user) {
-		res.status(401);
-		throw new Error('Invalid Credentials');
+		res.status(404);
+		throw new Error('User not found');
 	}
 
 	// check if password matches
 	const isMatch = await user.matchPassword(password);
 
 	if (!isMatch) {
-		res.status(401);
+		res.status(403);
 		throw new Error('Invalid Credentials');
 	}
 
 	if (user.isVerified === false) {
-		res.status(401);
+		res.status(403);
 		throw new Error(
 			'Your Account is not Verified. Please Verifiy Your Account'
 		);
