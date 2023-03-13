@@ -83,11 +83,12 @@ const verifyAccount = asyncHandler(async (req, res) => {
 		} else {
 			verifyUser.isVerified = true;
 			await verifyUser.save();
-			res.status(200).json({
-				success: true,
-				token: generateToken(verifyUser.id),
-			})
-			res.redirect('https://project-xp.vercel.app/')
+			const token1 = generateToken(verifyUser.id)
+			// res.status(200).json({
+			// 	success: true,
+			// 	token: generateToken(verifyUser.id),
+			// })
+			res.redirect('https://project-xp.vercel.app/?token='+ token1)
 		}
 	} catch (error) {
 		res.status(500);
