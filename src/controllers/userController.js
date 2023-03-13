@@ -26,6 +26,7 @@ const registerUser = asyncHandler( async (req, res) => {
         const {firstName, lastName, email, country,  password, isEmployer} = req.body
         
         const verifyToken = uuidv4();
+		const employer = isEmployer || false
 
         const userExist = await User.findOne({ email })
         if (userExist) {
@@ -38,7 +39,7 @@ const registerUser = asyncHandler( async (req, res) => {
 			email,
 			country,
 			password,
-			isEmployer,
+			isEmployer : employer,
 			isGoogle: false,
 			verificationCode: verifyToken,
 		});
