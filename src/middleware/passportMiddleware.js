@@ -29,7 +29,7 @@ async (accessToken, refreshToken, profile, done) => {
     }
     return done(null, user)
     }
-    if (currentUser.isGoogle === false){
+    if (!currentUser.isGoogle){
         return done(null, false, {
             message: `You have previously signed up with a different signin method`
         });
