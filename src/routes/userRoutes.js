@@ -3,7 +3,7 @@ const express = require("express");
 const passport = require('passport');
 const router = express.Router();
 const { check } = require("express-validator");
-const {loginUser, registerUser, verifyAccount, getUser, updateUser, forgotPassword, resetPassword, googleSignIn } = require('../controllers/userController');
+const {loginUser, registerUser, verifyAccount, getUser, updateUser, forgotPassword, resetPassword, googleSignIn, googleError } = require('../controllers/userController');
 const {authenticate} = require('../middleware/authMiddleware')
 
 // Login User Route
@@ -20,7 +20,8 @@ router.post('/register', [
 ], registerUser);
 
 router.get('/auth/google', passport.authenticate('google', { session: false, scope: ['profile', 'email'] }));
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'https://project-xp.vercel.app/login'}), googleSignIn)
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'https://project-x-g8rg.onrender.com/error'}), googleSignIn)
+router.get('/error', googleError);
 
 router.get('/register/:code', verifyAccount);
 router.get('/me', authenticate , getUser)
