@@ -3,7 +3,7 @@ const express = require("express");
 const passport = require('passport');
 const router = express.Router();
 const { check } = require("express-validator");
-const {loginUser, registerUser, verifyAccount, getUser, updateUser, forgotPassword, resetPassword, googleSignIn, googleError } = require('../controllers/userController');
+const {loginUser, registerUser, verifyAccount, getUser, updateUser, forgotPassword, resetPassword, googleSignIn } = require('../controllers/userController');
 const {authenticate} = require('../middleware/authMiddleware')
 
 // Login User Route

@@ -156,11 +156,6 @@ const googleSignIn = asyncHandler(async (req, res) => {
 		token : req.user.token
 	})
 })
-const googleError = asyncHandler(async (req, res) => {
-	res.status(404)
-    throw new Error('You have previously signed up with a different signin method')
-})
-
 /**
  * @desc Get user profile
  * @route POST
@@ -317,5 +312,4 @@ module.exports = {
     forgotPassword,
     resetPassword,
 	googleSignIn,
-	googleError
 }
